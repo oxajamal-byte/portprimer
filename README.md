@@ -83,7 +83,7 @@ PortPrimer needs Python 3.11 or newer. Pick the section for your operating syste
 ### Windows
 
 ```powershell
-git clone https://github.com/YOUR_USERNAME/portprimer.git
+git clone https://github.com/oxajamal-byte/portprimer.git
 cd portprimer
 py -m venv .venv
 .\.venv\Scripts\activate
@@ -93,7 +93,7 @@ py -m pip install -e .
 ### macOS
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/portprimer.git
+git clone https://github.com/oxajamal-byte/portprimer.git
 cd portprimer
 python3 -m venv .venv
 source .venv/bin/activate
@@ -103,7 +103,7 @@ python3 -m pip install -e .
 ### Linux
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/portprimer.git
+git clone https://github.com/oxajamal-byte/portprimer.git
 cd portprimer
 python3 -m venv .venv
 source .venv/bin/activate
