@@ -1,54 +1,154 @@
+<div align="center">
+
 # PortPrimer
 
-**Ports explained, not exploited.**
+**A port scanner that teaches you what the results actually mean.**
 
-PortPrimer is a beginner-friendly port learning tool for authorized cybersecurity practice. It teaches what ports are, what common services use them, why exposure matters, and how to think safely about scan results.
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776ab?logo=python&logoColor=white)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-d7b56d.svg)](LICENSE)
+[![Tests](https://img.shields.io/badge/tests-62%20passing-4caf50.svg)](tests/)
+[![Status](https://img.shields.io/badge/status-stable-blue.svg)](#)
 
-PortPrimer is not a replacement for Nmap, not an exploit tool, and not a vulnerability scanner. It helps beginners learn what common open TCP services mean.
+<br />
 
-## What is PortPrimer?
+![PortPrimer main menu](assets/menu.png)
 
-PortPrimer performs normal TCP connect scanning against a target you own, manage, or have clear permission to test. For each open port, it shows:
+</div>
 
-- Port number
-- Common service name
-- Learning label, such as Web Door or Admin Door
-- Action hint
-- Short beginner notes
+<br />
 
-An open port is not automatically a vulnerability. It is a clue. Whether it matters depends on exposure, configuration, authentication, patching, and whether the service is needed.
+## Why this exists
 
-## Why I built it
+Most beginner port scanners give you the same answer: a port is open, a port is closed. That answer is technically correct and practically useless if you don't already know what port 6379 does, why anyone should care that 445 is reachable, or what a "Web Door" is versus an "Admin Door."
 
-Many first port scanner projects stop at `open` or `closed`. PortPrimer adds beginner-focused context so a learner can understand why a port might matter without jumping into exploitation or fear-based language.
+PortPrimer fills the gap between running a scan and understanding what just came back. Every open service shows up with context: what the service typically does, why exposure matters, and what to think about next. It's a learning tool first, a scanner second.
 
-## What makes it different from a normal port scanner
+It is not a replacement for Nmap. It is not an exploit framework. It is not a vulnerability scanner. It is a way to learn what open services mean without needing someone over your shoulder to explain them.
 
-- Small, intentional scan profiles
-- Friendly explanations for open services
-- Responsible-use checks before scanning
-- Website/public-IP scans supported with explicit authorization
-- Markdown and JSON reports
-- A clean field-notebook terminal interface
+<br />
 
-## Interactive modes
+## Features
 
-Run:
+- Safe TCP connect scanning with permission checks built in
+- Six scan profiles covering web, admin, database, mail, and lab targets
+- A localhost-only Playground Tour so you can practice without spinning up a VM
+- A simulated Metasploitable Demo Tour for learning lab ports without installing the VM
+- A 20-question Port Knowledge Quiz with category-based feedback
+- A Port Learning Center covering ports, TCP vs UDP, and exposure concepts
+- Full local port scanning (1-65535) limited to localhost, private IPs, and lab targets
+- Markdown and JSON reports with beginner notes for every open service
+- Authorized website and public IP scanning gated behind explicit confirmation
+- Warm amber terminal UI built on Rich, not the usual blue
+
+<br />
+
+## Screenshots
+
+### Playground Tour
+
+Spin up safe local practice services on `127.0.0.1` and scan them in one command. No VM, no lab setup, no risk.
+
+![PortPrimer Playground Tour](assets/playground-tour.png)
+
+### Learning Notes
+
+Every open service comes with a short, structured explanation. No fearmongering, no exploit walkthroughs, just context.
+
+![PortPrimer learning notes](assets/learning-notes.png)
+
+### Port Knowledge Quiz
+
+Twenty randomized questions covering web ports, admin ports, databases, mail, lab safety, and exposure thinking. Each wrong answer comes with an explanation, and the final score tells you which categories to review.
+
+![PortPrimer Port Knowledge Quiz](assets/quiz.png)
+
+### Metasploitable Demo Tour
+
+Learn what the common Metasploitable 2 services are and why they matter, without installing Metasploitable 2.
+
+![PortPrimer Metasploitable Demo Tour](assets/metasploitable-demo.png)
+
+### Reports
+
+Every scan writes a Markdown report and a JSON report. The Markdown version is built to be readable on its own.
+
+![PortPrimer report preview](assets/report-preview.png)
+
+<br />
+
+## Installation
+
+PortPrimer needs Python 3.11 or newer. Pick the section for your operating system.
+
+### Windows
+
+```powershell
+git clone https://github.com/YOUR_USERNAME/portprimer.git
+cd portprimer
+py -m venv .venv
+.\.venv\Scripts\activate
+py -m pip install -e .
+```
+
+### macOS
 
 ```bash
+git clone https://github.com/YOUR_USERNAME/portprimer.git
+cd portprimer
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install -e .
+```
+
+### Linux
+
+```bash
+git clone https://github.com/YOUR_USERNAME/portprimer.git
+cd portprimer
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install -e .
+```
+
+### Verify the install
+
+```bash
+python -m pytest -q
+```
+
+You should see 62 tests pass. If something fails, open an issue with the output.
+
+<br />
+
+## Quick start
+
+Launch the interactive menu:
+
+```bash
+python -m portprimer
+```
+
+On Windows:
+
+```powershell
 py -m portprimer
 ```
 
-Choose:
+Or jump straight into the Playground Tour:
 
-```text
- ___           _   ___      _
-| _ \___ _ _| |_| _ \_ _(_)_ __  ___ _ _
-|  _/ _ \ '_|  _|  _/ '_| | '  \/ -_) '_|
-|_| \___/_|  \__|_| |_| |_|_|_|_\___|_|
+```bash
+python -m portprimer playground
+```
 
-        ports explained, not exploited
+That single command starts five practice services on `127.0.0.1`, scans them, writes a Markdown and JSON report, and shuts everything down. It is the fastest way to see what PortPrimer does.
 
+<br />
+
+## Interactive modes
+
+The interactive menu is the main way to use PortPrimer. It behaves like a workspace, not a one-shot script. After every action, you get a Next menu with four options: learn more, return to the main menu, run again, or quit.
+
+```
 [1] Playground Tour             safe local practice, no VM needed
 [2] Metasploitable Demo Tour    learn lab ports without installing a VM
 [3] This Computer               scan localhost
@@ -61,244 +161,204 @@ Choose:
 [0] Exit
 ```
 
-Interactive mode behaves like a small workspace. After a scan or demo finishes, choose what to do next:
+Each mode has a specific purpose:
 
-```text
-Next:
-[L] learn about these ports
-[M] main menu
-[R] run again
-[Q] quit
-```
+| Mode | What it does | Requires |
+| --- | --- | --- |
+| Playground Tour | Spins up local practice services and scans them | Nothing |
+| Metasploitable Demo Tour | Teaches Metasploitable-style ports with simulated results | Nothing |
+| This Computer | Scans localhost with the beginner profile | Permission confirmation |
+| Private IP / Home Lab | Scans a device on your local network | Permission confirmation |
+| Metasploitable 2 VM | Scans your own isolated Metasploitable VM | Isolated lab, permission |
+| Website / Public IP | Scans a public target you own or have written permission to test | Typing `AUTHORIZED` |
+| Full Local Port Scan | Checks TCP 1-65535 on local or private targets only | Permission confirmation |
+| Port Knowledge Quiz | Runs the 20-question quiz | Nothing |
+| Demo Report | Generates a sample report without scanning | Nothing |
 
-Pressing Enter at the `Next` prompt returns to the main menu. Use `--no-clear` for screenshots or debugging:
+<br />
 
-```bash
-py -m portprimer --no-clear
-```
+## Command line examples
 
-Use `--compact-logo` when you want the short logo even in a wide terminal:
-
-```bash
-py -m portprimer --compact-logo
-```
-
-Command-line mode exits after each command, which makes it suitable for scripts and repeatable examples.
-
-## Scan paths
-
-- Playground Tour: safe local practice services on `127.0.0.1`; no VM needed.
-- Metasploitable Demo Tour: simulated lab-port learning without scanning or installing a VM.
-- This Computer: scans localhost with the beginner profile.
-- Private IP / Home Lab: scans a device you own or manage on your local network.
-- Metasploitable 2 VM Scan: scans your own isolated vulnerable lab VM.
-- Website / Public IP: scans a public website or IP when you own it or have written permission. The interactive path requires typing `AUTHORIZED`.
-- Full Local Port Scan: scans TCP ports 1-65535 on localhost/private targets only, with explicit permission.
-- Port Knowledge Quiz: 20 randomized multiple-choice questions, with Learning Center access from the same learning area.
-- Demo Report: generates a sample report without scanning.
-
-## Playground Tour
-
-Playground Tour is for beginners who do not have a lab VM, Docker, VirtualBox, or VMware ready yet. It starts a few harmless practice sockets on `127.0.0.1` using high ports only, scans those exact local ports, writes the normal Markdown and JSON reports, then shuts the sockets down.
+Direct beginner scan against localhost:
 
 ```bash
-py -m portprimer playground
+python -m portprimer scan --target 127.0.0.1 --profile beginner --i-have-permission
 ```
 
-The playground services are not real SSH, database, HTTP, Redis, or vulnerable services. They are simple local TCP listeners that send a short plain-text learning message. They bind only to `127.0.0.1` and exist so you can see how open ports appear in a scan.
-
-Add `--explain` when you want short learning notes in the terminal:
+Show learning notes inline:
 
 ```bash
-py -m portprimer playground --explain
-```
-
-## Metasploitable 2 Lab Mode
-
-Lab mode uses a profile for common Metasploitable 2 training ports:
-
-```bash
-py -m portprimer lab --target 192.168.56.101 --i-have-permission
-```
-
-Use this only with your own isolated local lab VM. Metasploitable 2 is intentionally vulnerable and should not be exposed to public networks.
-
-## Metasploitable Demo Tour
-
-This mode does not scan. It uses simulated Metasploitable-style open ports to teach what common lab services are and why they matter.
-
-```bash
-py -m portprimer metasploitable-demo
-```
-
-It does not include exploitation steps or attack instructions.
-
-## Full Local Port Scan
-
-Full-range scanning is optional and private-only. It checks TCP ports `1-65535` using normal TCP connect scanning and can take longer.
-
-```bash
-py -m portprimer scan --target 127.0.0.1 --full-range --i-have-permission
-```
-
-Public targets are refused for full-range scans, even when `--allow-public-target` is provided.
-
-## Responsible use
-
-PortPrimer requires `--i-have-permission` before command-line scanning. If a target appears public, PortPrimer also requires `--allow-public-target`.
-
-Website/public-IP scans are supported for targets you own or have written permission to test. Public targets are blocked by default to teach safe scope; add `--allow-public-target` only when the scan is authorized. Do not scan random public targets.
-
-This refuses because the public-target confirmation is missing:
-
-```bash
-py -m portprimer scan --target example.com --profile web --i-have-permission
-```
-
-This is the supported form for an authorized website or public-IP scan:
-
-```bash
-py -m portprimer scan --target example.com --profile web --i-have-permission --allow-public-target
-```
-
-## Installation
-
-```bash
-pip install -e .
-```
-
-For development tests:
-
-```bash
-pip install -e ".[dev]"
-pytest
-```
-
-## Quick start
-
-Direct beginner scan:
-
-```bash
-py -m portprimer scan --target 127.0.0.1 --profile beginner --i-have-permission
-```
-
-Show compact terminal explanations:
-
-```bash
-py -m portprimer scan --target 127.0.0.1 --profile beginner --i-have-permission --explain
+python -m portprimer scan --target 127.0.0.1 --profile beginner --i-have-permission --explain
 ```
 
 Custom ports:
 
 ```bash
-py -m portprimer scan --target 127.0.0.1 --ports 22,80,443,3306 --i-have-permission
+python -m portprimer scan --target 127.0.0.1 --ports 22,80,443,3306 --i-have-permission
 ```
 
-Demo report without scanning:
+Authorized public scan (only on a target you own):
 
 ```bash
-py -m portprimer demo
+python -m portprimer scan --target your-domain.com --profile web --i-have-permission --allow-public-target
 ```
 
-Authorized website or domain scan:
+Full local port scan:
 
 ```bash
-py -m portprimer scan --target example.com --profile web --i-have-permission --allow-public-target
+python -m portprimer scan --target 127.0.0.1 --full-range --i-have-permission
 ```
 
-Learning center and quiz:
+Quiz and Learning Center:
 
 ```bash
-py -m portprimer learn
-py -m portprimer quiz
+python -m portprimer quiz
+python -m portprimer learn
 ```
+
+<br />
 
 ## Scan profiles
 
-- `beginner`: common learning ports across web, admin, mail, file sharing, and databases
-- `web`: common web service ports
-- `remote`: remote access ports
-- `database`: common database and data service ports
-- `playground`: simulated local teaching ports, `8022`, `8080`, `15432`, `16379`, and `18080`
-- `metasploitable2`: common ports for a local Metasploitable 2 lab VM
+| Profile | Ports | Use case |
+| --- | --- | --- |
+| `beginner` | 17 common learning ports across web, admin, mail, files, and databases | First scan |
+| `web` | 80, 443, 8000, 8080, 8443 | Web services |
+| `remote` | 22, 23, 3389, 5900 | Remote access |
+| `database` | 1433, 1521, 3306, 5432, 6379, 9200, 27017 | Database services |
+| `playground` | 8022, 8080, 15432, 16379, 18080 | Playground Tour only |
+| `metasploitable2` | 23 common lab ports | Local Metasploitable 2 VM |
 
-Custom scans accept comma-separated ports, reject duplicates, reject invalid ports, and are limited to 100 ports.
+Custom port lists accept up to 100 comma-separated ports, reject duplicates, and reject anything outside 1-65535.
 
-## Example output
+<br />
 
-Default terminal output is intentionally brief. Full learning notes are always written to the Markdown and JSON reports.
+## Reports
 
-```text
- ___           _   ___      _
-| _ \___ _ _| |_| _ \_ _(_)_ __  ___ _ _
-|  _/ _ \ '_|  _|  _/ '_| | '  \/ -_) '_|
-|_| \___/_|  \__|_| |_| |_|_|_|_\___|_|
+Every scan writes two files to `reports/`:
 
-        ports explained, not exploited
-
-Scan: Playground Tour
-Target: 127.0.0.1
-Profile: playground
-Checked: 5 ports
-Open: 5
-
-Open services
-----------------------------------------
-8022   Playground SSH        Admin Door  Lab only
-8080   HTTP Alternate        Web Door    Review
-15432  Playground DB         Data Door   Lab only
-
-Reports saved
-  Markdown: reports/portprimer-playground-127-0-0-1-20260526-1815.md
-  JSON:     reports/portprimer-playground-127-0-0-1-20260526-1815.json
+```
+reports/portprimer-playground-127-0-0-1-20260527-1928.md
+reports/portprimer-playground-127-0-0-1-20260527-1928.json
 ```
 
-With `--explain`, command-line mode adds short notes after the open-services list. In interactive mode, choose `L` from the `Next` menu:
+The Markdown report includes target settings, a summary, an open services table, and beginner notes for every open service. The JSON file holds the same information in a structured format for tooling.
 
-```text
-8022/tcp Playground SSH
-  What: Safe local practice service.
-  Use:  Shows how an admin-style open port appears.
-  Watch: Localhost only. Not a real SSH service.
-  Takeaway: Keep admin access restricted.
+Reports are written locally and never transmitted anywhere.
+
+<br />
+
+## Responsible use
+
+PortPrimer is built for authorized learning. The guardrails are deliberate.
+
+- Direct command line scans require the `--i-have-permission` flag.
+- Scans of public targets require the additional `--allow-public-target` flag.
+- The interactive Website / Public IP mode requires you to type `AUTHORIZED`.
+- Full range scans (1-65535) are refused for public targets, even with `--allow-public-target`.
+- Playground services bind only to `127.0.0.1` and shut down when the scan finishes.
+
+This refuses:
+
+```bash
+python -m portprimer scan --target example.com --profile web --i-have-permission
 ```
 
-## Example report
+This is the supported form for an authorized public scan:
 
-Reports are written with the scan path or profile, safe target name, and timestamp:
+```bash
+python -m portprimer scan --target example.com --profile web --i-have-permission --allow-public-target
+```
 
-- `reports/portprimer-playground-127-0-0-1-20260526-1815.md`
-- `reports/portprimer-scan-custom-127-0-0-1-20260526-1818.json`
-- `reports/portprimer-demo-local-lab-20260526-1819.md`
+The reason for the difference is simple. Tools like Nmap assume the operator already knows scope, permission, and consequences. PortPrimer assumes the user is learning, so the default behavior is the safe one. The flags are not blocks; they are a moment to confirm you actually have permission.
 
-See [docs/example-report.md](docs/example-report.md) and [examples/sample-report.md](examples/sample-report.md).
+An open port is not automatically a vulnerability. It is a clue. Whether it matters depends on exposure, configuration, authentication, patching, and whether the service is needed at all.
 
-## How PortPrimer explains open ports
+<br />
 
-Reports include full learning notes for each known open port:
+## What PortPrimer does not do
 
-- What it is
-- Used for
-- Why it matters
-- What to watch
-- Should it be open
-- Beginner note
+- No SYN, stealth, or fragmented scanning
+- No packet spoofing or decoy scanning
+- No IDS or firewall evasion
+- No exploitation, brute forcing, or credential testing
+- No aggressive banner grabbing
+- No OS fingerprinting
+- No CIDR or mass scanning
+- No claims about whether a system is secure or insecure
 
-Unknown open ports are still displayed as `Unknown Door` with the action hint `Learn more before changing`.
+These are intentional limits. The goal is education, not offense.
 
-## Limitations
-
-PortPrimer only performs normal TCP connect scanning. It does not perform SYN scanning, stealth scanning, packet spoofing, decoy scanning, IDS or firewall evasion, exploit checks, brute forcing, credential testing, OS fingerprinting, aggressive banner grabbing, mass internet scanning, or CIDR scanning.
-
-PortPrimer does not prove a machine is secure or insecure.
+<br />
 
 ## Project structure
 
-```text
-portprimer/
-  portprimer/   Python package
-  docs/         Beginner and responsible-use documentation
-  examples/     Sample report outputs
-  reports/      Generated local reports
-  tests/        pytest test suite
 ```
+portprimer/
+├── portprimer/          Python package
+│   ├── cli.py           Command line entry point
+│   ├── menu.py          Interactive menu and workflow
+│   ├── scanner.py       Async TCP connect scanner
+│   ├── safety.py        Permission and target checks
+│   ├── profiles.py      Scan profiles and port parsing
+│   ├── knowledge.py     Port database with learning notes
+│   ├── playground.py    Local practice services
+│   ├── quiz.py          Port Knowledge Quiz
+│   ├── learning.py      Port Learning Center
+│   ├── report.py        Markdown and JSON report generation
+│   └── ui.py            Rich terminal interface
+├── docs/                Beginner guide, responsible use, design decisions
+├── examples/            Sample reports
+├── tests/               pytest suite, 62 tests
+├── assets/              README screenshots
+└── reports/             Generated locally, gitignored
+```
+
+<br />
+
+## Running the tests
+
+```bash
+python -m pytest -q
+```
+
+The suite covers safety checks, profile parsing, scanner output, report generation, the playground services, the quiz, the learning center, the interactive menu, and the CLI output formatting.
+
+<br />
+
+## Design decisions
+
+A few of the more interesting choices are documented in [`docs/design-decisions.md`](docs/design-decisions.md). The short version:
+
+- TCP connect scanning only, because it's easy to understand and doesn't need raw socket privileges.
+- Playground services use high ports (8022, 8080, 15432, 16379, 18080) and bind to `127.0.0.1` so they can't be reached from anywhere else.
+- Full range scans are private-only because teaching the concept doesn't require enabling broad public scanning.
+- Reports always include the full learning notes; the terminal output stays compact unless you ask for `--explain`.
+- The interactive menu is built around a Next menu so users can chain actions without restarting the tool.
+
+<br />
+
+## Documentation
+
+- [Beginner Guide](docs/beginner-guide.md)
+- [Responsible Use](docs/responsible-use.md)
+- [Metasploitable 2 Lab Setup](docs/metasploitable2-lab.md)
+- [Design Decisions](docs/design-decisions.md)
+- [Example Report](docs/example-report.md)
+- [Security Policy](SECURITY.md)
+
+<br />
+
+## License
+
+MIT. See [LICENSE](LICENSE).
+
+<br />
+
+---
+
+<div align="center">
+
+**Ports explained, not exploited.**
+
+</div>
