@@ -1,0 +1,69 @@
+{
+  "tool": "PortPrimer",
+  "target": "demo-local-lab",
+  "profile": "demo",
+  "generated_at": "2026-05-26T00:00:00Z",
+  "settings": {
+    "timeout": 1.0,
+    "concurrency": 10
+  },
+  "summary": {
+    "open": 3,
+    "closed": 2,
+    "timeout": 0,
+    "total": 5
+  },
+  "results": [
+    {
+      "port": 22,
+      "status": "open"
+    },
+    {
+      "port": 80,
+      "status": "open"
+    },
+    {
+      "port": 443,
+      "status": "closed"
+    },
+    {
+      "port": 3306,
+      "status": "closed"
+    },
+    {
+      "port": 8080,
+      "status": "open"
+    }
+  ],
+  "open_services": [
+    {
+      "port": 22,
+      "service": "SSH",
+      "learning_label": "Admin Door",
+      "action_hint": "Keep private",
+      "what_it_is": "SSH is used to remotely manage a machine.",
+      "why_it_matters": "It is normal on servers, but admin access should be protected carefully.",
+      "beginner_note": "If SSH is open, use strong authentication and restrict who can reach it."
+    },
+    {
+      "port": 80,
+      "service": "HTTP",
+      "learning_label": "Web Door",
+      "action_hint": "Usually okay if expected",
+      "what_it_is": "HTTP serves websites or web applications without built-in encryption.",
+      "why_it_matters": "Web services are common, but public exposure should be intentional.",
+      "beginner_note": "If HTTP is open, learn what site or app is being served."
+    },
+    {
+      "port": 8080,
+      "service": "HTTP Alternate",
+      "learning_label": "Web Door",
+      "action_hint": "Review if unexpected",
+      "what_it_is": "Port 8080 commonly hosts alternate web applications or proxies.",
+      "why_it_matters": "It is easy to forget test or admin web apps on alternate ports.",
+      "beginner_note": "Open the service in a browser only when you are authorized."
+    }
+  ],
+  "important_note": "An open port is not automatically a vulnerability. It is a clue. Whether it matters depends on exposure, configuration, authentication, patching, and whether the service is needed."
+}
+
